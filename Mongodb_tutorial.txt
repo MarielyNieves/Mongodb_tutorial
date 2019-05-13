@@ -1,0 +1,89 @@
+#Mongodb, Mariely Nieves González
+
+#Level 1
+
+#Databases
+
+#Show all the commands list
+Input: db.help()
+
+#Create a database in shell or change the name 
+Input: use reviews
+
+#Returns the current database name 
+Input: db
+Output:reviews
+
+#Show list of databases with name and size
+Input: show dbs
+Output: 
+reviews         0.078 GB
+
+#Documents
+
+#Create a document calling flowers
+Input:
+{
+
+    "name": "Sunflower",
+     "type":"Plant"
+
+}
+
+#Use insert coomand
+#We use insert() command for inserting document into a collection
+
+Input:
+
+db.flowers.insert (
+
+  {
+       "name": "Sunflowers",
+        "type": "Plant"
+  }
+)
+
+WriteResult ({ "nInserted": 1})
+
+#Data: We use WriteResult because whenever write a database, always returned an object that tells us if the operation was successful or not.
+
+#Add more flowers
+
+db.flowers.insert(...)
+WriteResult ({ "nInserted": 1})
+
+
+#Use find command for return all documents in a collection
+
+Input:
+
+db.flowers.find()
+{ "name": "Sunflowers"...}
+{  "name":"Rosas"...}
+{ "name": "Tulipanes"...}
+
+#Now, find returns a total of 3 flowers.
+
+
+#Level 2
+
+#Use ObjectId : It serves for generate id for your documents.
+
+Input:
+db.flowers.find()
+{
+    "_id": ObjectId("2345dd46c5b7s89"),
+    "name": "Sunflower",
+    "type": "Plant"
+}
+
+
+#Some initials functions
+
+#Add price and score
+{
+    "name": "Sunflower",
+    "type": "Plant",
+     "price": 10.99,
+     "score" : 59
+}
