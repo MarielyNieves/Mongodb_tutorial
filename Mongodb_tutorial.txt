@@ -97,3 +97,7 @@ db.potions.find({"price":{"$gt":10,"$lt":20}})
 #lt=less
 #So, in conclusion, it needs to find price greater than 10 and less than 20.
 
+
+
+
+
