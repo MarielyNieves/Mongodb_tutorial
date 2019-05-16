@@ -1,4 +1,4 @@
-#Mongodb, Mariely Nieves Gonz·lez
+#Mongodb, Mariely Nieves Gonz√°lez
 
 #Level 1
 
@@ -87,3 +87,13 @@ db.flowers.find()
      "price": 10.99,
      "score" : 59
 }
+
+
+#Use gt and it, we use for finding something values between two thingst, in this case we are looking potions between price
+
+Input:
+db.potions.find({"price":{"$gt":10,"$lt":20}})
+#Gt=greater
+#lt=less
+#So, in conclusion, it needs to find price greater than 10 and less than 20.
+
