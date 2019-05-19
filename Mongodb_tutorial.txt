@@ -97,6 +97,123 @@ db.potions.find({"price":{"$gt":10,"$lt":20}})
 #lt=less
 #So, in conclusion, it needs to find price greater than 10 and less than 20.
 
+#Use .find () with .count()
+#Mehtod on cursor that return the count of matching documents.
+
+Input:db.potions.find().count()
+
+Output:80
+
+#Use sort() command.
+#We can use the sort cursor method to sort documents, in this case we sort potions through the potion's price.
+
+#Basic Pagination
+#We implement basic pagination by limiting and skipping over documents, use the skip() and limit() cursor method.
+
+Input:
+db.potions.find.limit(3)
+
+db.potions.find().skip(3).limit(3)
+
+
+#We aren´t skipping, we just limit 3 in the first one.
+#Limit is for the pages that we use in the document.
+
+
+
+Input: db.potions.find().sort({"price": 1})
+
+
+
+#Frequently Questions about MongoDB
+
+#1.What is difference between MongoDB and SQL or NoSQL between SQL?
+
+#Answer 1:In MongoDB, development is simplified as its documents map naturally to modern, object-oriented programming languages. In SQL, we need object-relational mapping (ORM) layer that translates objects in code to relational tables. Also,In MongoDB, each document can store data with different attributes from other documents. With JSON documents, we can add new attributes when we need to, without having to alter a centralized database schema. But in a relational database, this causes downtime and significant performance overhead.
+
+#2.What is _id Field in MongoDB?
+
+# Answer 2:In MongoDB, each document stored in a collection requires a unique _id field that acts as a primary key. If an inserted document omits the _id field, the MongoDB driver automatically generates an ObjectId for the _id field.
+
+#3.What is collection in MongoDB?
+
+#Answer 3:A collection is a group of documents. If a document is the MongoDB analog of a row in a relational database, then collection is the analog to a table. Collections have dynamic schemas. This means that the documents within a single collection can have any number of different shapes. For example, both the following documents can be stored in a single collection.
+
+#4.What MongoDB does mean?
+
+#Answer 4:MongoDB is an open-source document database that provides high performance, high availability, and automatic scaling. It's Key Features are: Document Oriented and NoSQL database.
+Supports Aggregation, Uses BSON format, Sharding (Helps in Horizontal Scalability), Supports Multiple Storage Engines,etc.
+
+#5.What Is Replication In MongoDB?
+
+#Answer 5:Replication is the process of synchronizing data across multiple servers. Replication provides redundancy and increases data availability. With multiple copies of data on different database servers, replication protects a database from the loss of a single server. Replication also allows you to recover from hardware failure and service interruptions.
+
+#6.What is the difference b/w MongoDB and CouchDB?
+
+#Answer 6:MongoDB and CouchDB both are the great example of open source NoSQL database. Both are document oriented databases. Although both stores data but there is a lot of difference between them in terms of implementation of their data models, interfaces, object storage and replication methods etc.
+
+
+#7.What are NoSQL databases? 
+
+#Answer 7:A NoSQL database provides a mechanism for storage and retrieval of data that is modeled in means other than the tabular relations used in relational databases (like SQL, Oracle, etc.).
+
+
+#8.What is Sharding in MongoDB? 
+
+#Answer 8:Sharding is a method for storing data across multiple machines. MongoDB uses sharding to support deployments with very large data sets and high throughput operations.
+
+#9.What tools are available for monitoring MongoDB?
+
+#Answer 9:Starting in version 4.0, MongoDB offers free Cloud monitoring for standalones and replica sets. Free monitoring provides information about your deployment, including: Operation Execution ,Times, Memory Usage, CPU Usage, Operation Counts.
+
+#10. Can I rename a replica set?
+
+#Answer 10.No., but you can use the backup and restore procedure described in the Restore a Replica Set from MongoDB Backups tutorial to create a new replica set with the desired name. Downtime may be necessary in order to ensure parity between the original replica set and the new one.
+
+#11. Comparison between MongoDB and Cassandra.
+
+#Answer 11:
+
+#MongoDB: Data mode are the document, Database scalability is read-only, Query of the data is multi-index.
+#Cassandra: Data mode are a big table like, Database scalability is write only ,Query of the data by using scan or key.
+
+
+#12.Is it necessary to call “getLastError” to make a write durable?
+
+#Answer 12: No, it is not necessary to call “getLastError”(Safe Mode). Here the server behaves as if it has been called. The “getLastError” simply allows one to get confirmation that write operation is successfully committed. Here you will want the confirmation, but the safety of write and its durability is independent.
+
+
+#13 How to get MongoDB database in JavaScript array?
+
+#Answer 13: To get this use the following code:
+
+use admin
+dbs = db.runCommand({listDatabases: 1})
+dbNames = []
+for (var i in dbs.databases) { dbNames.push(dbs.databases[i].name) }
+Hopefully this will help.
+The below will create an array of the names of the database:
+var connection = new Mongo();
+var dbNames = connection.getDBNames();
+
+#14.What is a Namespace in MongoDB?
+
+#Answer 14: A Namespace is the concatenation of the database name and collection name. For e.g. school.students with school as the database and students as the collection.
+
+
+#15. Does MongoDB need a lot of RAM?
+
+
+#Answer 15:  No. MongoDB can be run even on a small amount of RAM. MongoDB dynamically allocates and de-allocates RAM based on the requirements of other processes.
+
+
+
+#References
+https://medium.com/@vigowebs/frequently-asked-mongodb-interview-questions-and-answers-1f17c6b0950d
+https://dev.to/aershov24/30-top-mongodb-interview-questions-and-answers-3d1p
+https://docs.mongodb.com/manual/faq/
+https://data-flair.training/blogs/interview-questions-for-mongodb
+https://www.tutorialspoint.com/mongodb/mongodb_interview_questions.htm
 
 
 
