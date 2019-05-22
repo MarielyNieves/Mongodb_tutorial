@@ -158,6 +158,22 @@ db.potions.aggregate([
    }
  ])
  
+ 
+ 
+ #Use $maz and $min together
+ 
+ db.´ptions.aggregate({
+ { "$group": {
+         "_id": "$vendor_id",
+         "max_grade": {"$maz": "$grade"}
+         "min_grade": {"$min": $grade}
+         
+      }
+      
+  } 
+  
+])
+ 
 
 
 #Find objects between two dates
