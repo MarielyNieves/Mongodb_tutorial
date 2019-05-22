@@ -119,9 +119,46 @@ db.potions.find().skip(3).limit(3)
 #We aren´t skipping, we just limit 3 in the first one.
 #Limit is for the pages that we use in the document.
 
-
-
 Input: db.potions.find().sort({"price": 1})
+
+
+#Index on array field
+
+Input: db.col1.save({'colors': ['red','blue']})
+
+Input db.col1.ensureIndex({'colors':1})
+
+Input: db.col1.find({'colors': 'red'})
+
+Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blue" ] }
+
+Input: db.col1.find({'colors': 'blue'})
+Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blue" ] }
+
+#How do I perform the SQL JOIN equivalent in MongoDB?
+
+{
+   $lookup:
+     {
+       from: <collection to join>,
+       localField: <field from the input documents>,
+       foreignField: <field from the documents of the "from" collection>,
+       as: <output array field>
+     }
+}
+
+#Find objects between two dates
+
+db.CollectionName.find({"whenCreated": {
+    '$gte': ISODate("2018-03-06T13:10:40.294Z"),
+    '$lt': ISODate("2018-05-06T13:10:40.294Z")
+}});
+
+# How to find document with array that contains a specific value?
+
+PersonModel.find({ favouriteFoods: "sushi" }, ...);
+PersonModel.find({ favouriteFoods: { "$in" : ["sushi"]} }, ...);
+
 
 
 
