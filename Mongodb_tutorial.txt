@@ -147,6 +147,19 @@ Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blu
      }
 }
 
+#Summing the grade Per Vendor, use $grade for sum the grade values for potions in their group.
+
+db.potions.aggregate([
+{"$group":    {
+                "_id":"$vendor_id",
+                "total":{"$sum":1},
+                "grade_total":{"$sum":"$grade"}
+              }
+   }
+ ])
+ 
+
+
 #Find objects between two dates
 
 db.CollectionName.find({"whenCreated": {
