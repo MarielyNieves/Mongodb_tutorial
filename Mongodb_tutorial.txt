@@ -1,7 +1,20 @@
 #Mongodb, Mariely Nieves González
 
-#Level 1
+#Level 1:Conjuring MongoDB
 
+#MongoDB use a command line that interact with JavaScript
+
+#Put a variable 
+
+var potion = {
+       "name": "Invisibility",
+       "vendor":"Kettlecooked"
+       
+     }
+
+ #For call a variable only need to write the name of them.
+ 
+ 
 #Databases
 
 #Show all the commands list
@@ -65,7 +78,7 @@ db.flowers.find()
 #Now, find returns a total of 3 flowers.
 
 
-#Level 2
+#Level 2: Mystical Modifications
 
 #Use ObjectId : It serves for generate id for your documents.
 
@@ -88,9 +101,121 @@ db.flowers.find()
      "score" : 59
 }
 
+#Use a tryData
+#Trydate serves for put a date in an object for get saved in the databases.
 
-#Use gt and it, we use for finding something values between two thingst, in this case we are looking potions between price
+{
+    "name": "Sunflower",
+    "type": "Plant",
+     "price": 10.99,
+     "score" : 59
+     "tryDate": new Date (2012,8,13)
+}
 
+#Embedded Documents 
+#Embedded documents simply by adding the documents as a value for a given field.
+
+
+{
+    "name": "Sunflower",
+    "type": "Plant",
+     "price": 10.99,
+     "score" : 59,
+     "tryDate": new Date (2012,8,13),
+     "ratings":{"strength":2,"flavor":5}
+}
+
+#Insert Validations
+#Insert validations is for somethings that other datas don´t support.
+#In this case we were to insert a new posiotn but accidentaly set the price value to a sstring, and MongoDB it should be accept that.
+
+db.potions.insert({
+{
+    "name": "Sunflower",
+    "type": "Plant",
+     "price": "Tendolares",
+     "score" : 59,
+}
+
+#The price is not invalid, the document still got saved to the database.
+
+
+#Operator always begin with $
+
+#Use $set, is for change any parameter that you wish
+
+db.potions.update (
+   {"name":"Love"},
+  
+  {"$set",: ("price": 3.99}
+  
+  }
+  
+
+#Use gt and it, we use for finding something values between two thingst, in this case we are looking potions between price, and aslo if you don´t use the $set happens that your document it changes.
+
+#How do you know when the potion does not exist? Only use the function logs and the parameter  $inc
+
+db.logs.update(
+
+   {"potion":"Love"},
+   {"$inc":{"count": 1}},
+   
+)
+
+#If the potions is does not here your option it can be 0, in other way the result is different.
+
+#Create a Upsert
+
+db.logs.update(
+
+   {"potion":"Love"},
+   {"$inc":{"count": 1}},
+   {"upsert":true}
+   
+)
+
+#Use $rename for change the field names lke:
+
+db.potions.update(
+ {},
+ {"$rename": "score": 2grade"}},
+ {"multi":true}
+)
+
+#Updating Multiple Arrays
+
+["unicorns","secret","cotton"]
+
+
+#Updating an Embedded Value
+#Use update fot the dot notation to specify the field we want to update.
+ db.potions.update (
+     {"name": "Shrinking"},
+     {"$set": "ratings.strength": 5}}
+     
+
+#Modifying Arrays
+
+"categories":["tasty","effective"`]
+
+#Use $pop operator will remove either the fist or last value of an array
+
+db.potions.update(
+     {"name": "Shrinking"},
+     {"$pop": "categories": 1}}
+     
+     
+ #And also you can use $push for add a value to the end of an array is the same sitaxis as $pop operator.
+ 
+
+#Level 3: 
+
+#Use $it for lokking somehting lass than others
+
+db.potions.find({"price":{$it":20}})
+
+#Use find, for lokking something
 Input:
 db.potions.find({"price":{"$gt":10,"$lt":20}})
 #Gt=greater
@@ -115,12 +240,19 @@ db.potions.find.limit(3)
 
 db.potions.find().skip(3).limit(3)
 
+#Ecluding _id
+
+#ONLY USE FALSE
+
+db.potions.find(
+  {"grade":{$gt":80}},
+  {"vendor": true, "price":true, "_id":false}
+)
 
 #We aren´t skipping, we just limit 3 in the first one.
 #Limit is for the pages that we use in the document.
 
 Input: db.potions.find().sort({"price": 1})
-
 
 #Index on array field
 
@@ -135,6 +267,85 @@ Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blu
 Input: db.col1.find({'colors': 'blue'})
 Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blue" ] }
 
+
+
+Level 4: Morphing Models
+
+#Inserting references documents
+
+db.potions.insert({
+    "name": "Invisibility",
+     "vendor_id": "Kettleccoked"
+     ....
+  })
+
+# Features of embedded documents
+
+db.users.find({},{"email":true, "favorites":true})
+
+
+
+Level 5: Aggregattion Aplications
+
+#Aggregation Framework
+
+
+db.potions.aggregate(
+
+["$group":{"_id":"$vendor_id"}}]
+
+)
+
+
+
+#Summing the grade per vendor 
+
+db.potions.aggregate([
+{"$group":    {
+                "_id":"$vendor_id",
+                "total":{"$sum":1},
+                "grade_total":{"$sum":"$grade"}
+              }
+   }
+ ])
+ 
+  #Use $maz and $min together
+ 
+ db.´ptions.aggregate({
+ { "$group": {
+         "_id": "$vendor_id",
+         "max_grade": {"$maz": "$grade"}
+         "min_grade": {"$min": $grade}
+         
+      }
+      
+  } 
+  
+])
+
+
+
+#Use $match stage operator
+
+db.potions.aggregate([
+
+{"$match":{"ingredients":"unicorn"}}
+
+])
+
+  
+
+#Find objects between two dates
+
+db.CollectionName.find({"whenCreated": {
+    '$gte': ISODate("2018-03-06T13:10:40.294Z"),
+    '$lt': ISODate("2018-05-06T13:10:40.294Z")
+}});
+
+# How to find document with array that contains a specific value?
+
+PersonModel.find({ favouriteFoods: "sushi" }, ...);
+PersonModel.find({ favouriteFoods: { "$in" : ["sushi"]} }, ...);
 #How do I perform the SQL JOIN equivalent in MongoDB?
 
 {
@@ -149,44 +360,8 @@ Output: { "_id" : ObjectId("4ccc78f97cf9bdc2a2e54ee9"), "colors" : [ "red", "blu
 
 #Summing the grade Per Vendor, use $grade for sum the grade values for potions in their group.
 
-db.potions.aggregate([
-{"$group":    {
-                "_id":"$vendor_id",
-                "total":{"$sum":1},
-                "grade_total":{"$sum":"$grade"}
-              }
-   }
- ])
- 
- #
- 
- #Use $maz and $min together
- 
- db.´ptions.aggregate({
- { "$group": {
-         "_id": "$vendor_id",
-         "max_grade": {"$maz": "$grade"}
-         "min_grade": {"$min": $grade}
-         
-      }
-      
-  } 
-  
-])
- 
 
 
-#Find objects between two dates
-
-db.CollectionName.find({"whenCreated": {
-    '$gte': ISODate("2018-03-06T13:10:40.294Z"),
-    '$lt': ISODate("2018-05-06T13:10:40.294Z")
-}});
-
-# How to find document with array that contains a specific value?
-
-PersonModel.find({ favouriteFoods: "sushi" }, ...);
-PersonModel.find({ favouriteFoods: { "$in" : ["sushi"]} }, ...);
 
 
 
